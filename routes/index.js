@@ -3,18 +3,29 @@ const express = require ("express"),
 
 //home page route
 router.get("/", (req, res)=>{
-	res.send("reached home page");
+	res.render("landing");
 });
 
 //sign up page route
 router.get("/register", (req, res)=>{
-	res.send("reached sign up page");
+	res.render("register");
+});
+
+//handle signup logic
+router.post("/register", (req, res)=>{
+	res.redirect("/");
 });
 
 //login page router
 router.get("/login", (req,res)=>{
-	res.send("reached login page");
+	res.render("login");
 });
+
+//handle login logic
+router.post("/login", (req,res)=>{
+	res.redirect("/");
+});
+
 
 //logout route
 router.get("/logout", (req, res)=>{
