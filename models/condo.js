@@ -7,6 +7,13 @@ const condoSchema = new mongoose.Schema({
 	postalCode: String,
 	image: String,
 	rent: String,
+	comments: [ 
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Comment"
+		}
+	]
+
 
 });
 

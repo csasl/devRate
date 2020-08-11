@@ -39,7 +39,7 @@ router.post("/", (req, res)=>{
 
 //SHOW
 router.get("/:id", (req, res)=>{
-	Condo.findById(req.params.id, (err, foundCondo)=>{
+	Condo.findById(req.params.id).populate("comments").exec((err, foundCondo) =>{
 		if(err){
 			res.redirect("/condos");
 		} else {
