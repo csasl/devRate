@@ -1,0 +1,20 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-9">
+			<div class="thumbnail">
+				<img class="img-responsive, img-thumbnail" src="<%=condo.image %>">
+				<div class="caption-full">
+					<h4><%=condo.name %></h4>
+					<h4><%= condo.address %></h4>
+					<h4><%= condo.postalCode %></h4>
+					<h4><%= condo.developer %></h4>					
+				</div>				
+			</div>			
+		</div>		
+	</div>
+	
+</div>
+
+<%- include("../partials/footer") %>
