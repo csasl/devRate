@@ -1,5 +1,7 @@
 const express = require ("express"),
-	  router = express.Router();
+	  router = express.Router(),
+	  User = require("../models/user");
+
 
 //home page route
 router.get("/", (req, res)=>{
@@ -13,7 +15,7 @@ router.get("/register", (req, res)=>{
 
 //handle signup logic
 router.post("/register", (req, res)=>{
-	res.redirect("/");
+	let newUser = new User({username: req.body.username});
 });
 
 //login page router
