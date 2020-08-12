@@ -9,20 +9,14 @@ const app = express(),
 	  //Require models
 	  Condo = require("./models/condo"),
 	  Comment= require("./models/comment"),
-	  User = require("./models/user"),
-	  //Require routes
-	  indexRoutes = require("./routes/index"),
-	  condoRoutes = require("./routes/condo"),
-	  commentRoutes = require("./routes/comment");
+	  User = require("./models/user");
+	 
 
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname + "/public"));
-app.use(indexRoutes);
-app.use("/condos", condoRoutes);
-app.use(commentRoutes);
-//app.use("/condos/:id/comments", commentRoutes);
+
 
 //Mongoose set up
 mongoose.set('useNewUrlParser', true);
@@ -47,10 +41,20 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use((req, res)=>{
+app.use((req, res, next)=>{
 	res.locals.currentUser = req.user;
 	next();
 });
+
+//Require routes
+const  indexRoutes = require("./routes/index"),
+	  condoRoutes = require("./routes/condo"),
+	  commentRoutes = require("./routes/comment");
+
+app.use(indexRoutes);
+app.use("/condos", condoRoutes);
+app.use(commentRoutes);
+//app.use("/condos/:id/comments", commentRoutes);
 
 
 var port = process.env.PORT || 3000;

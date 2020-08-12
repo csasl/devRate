@@ -14,12 +14,12 @@ router.get("/", (req, res)=>{
 });
 
 //CREATE
-router.get("/new", (req, res)=>{
+router.get("/new", isLoggedIn, (req, res)=>{
 	res.render("condos/new");
 });
 
 //NEW
-router.post("/", (req, res)=>{
+router.post("/", isLoggedIn, (req, res)=>{
 	let name = req.body.name,
 		  developer = req.body.developer,
 		  address = req.body.address,
@@ -47,5 +47,14 @@ router.get("/:id", (req, res)=>{
 		}
 	});
 });
+
+//midlleware- check if logged findById
+function isLoggedIn(req, res, next) {
+	if(req.isAuthenticated()){
+		return next();
+	} else {
+		res.redirect("/login");
+	}
+}
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require ("express"),
 	  router = express.Router(),
-	  User = require("../models/user");
+	  User = require("../models/user"),
+	  passport = require("passport");
 
 
 //home page route
@@ -16,6 +17,17 @@ router.get("/register", (req, res)=>{
 //handle signup logic
 router.post("/register", (req, res)=>{
 	let newUser = new User({username: req.body.username});
+	User.register(newUser, req.body.password, (err, user)=>{
+		if(err){
+			//ADD FLASH HERE
+			return res.render("/register");
+		} else {
+			passport.authenticate("local")(req, res, ()=>{
+				//ADD FLASH HERE
+				res.redirect("/condos");
+			});
+		}
+	});
 });
 
 //login page router
@@ -24,14 +36,18 @@ router.get("/login", (req,res)=>{
 });
 
 //handle login logic
-router.post("/login", (req,res)=>{
-	res.redirect("/");
+router.post("/login", passport.authenticate("local", {
+	successRedirect: "/condos",
+	failureRedirect: "/login"
+	}), (req, res)=>{
+	
 });
-
 
 //logout route
 router.get("/logout", (req, res)=>{
-	res.send("reached logout page");
+	req.logout();
+	//ADD FLASH HERE
+	res.redirect("/condos");
 });
 
 module.exports = router;

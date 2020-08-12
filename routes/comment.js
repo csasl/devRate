@@ -4,7 +4,7 @@ const express = require("express"),
 	  Comment = require("../models/comment");
 
 //NEW COMMENT
-router.get("/condos/:id/comments/new", (req,res)=>{
+router.get("/condos/:id/comments/new", isLoggedIn, (req,res)=>{
 	console.log(req.params.id);
 	Condo.findById(req.params.id, (err, condo)=>{
 		if(err){
@@ -16,7 +16,7 @@ router.get("/condos/:id/comments/new", (req,res)=>{
 });
 
 //CREATE COMMENT
-router.post("/condos/:id/comments", (req, res)=>{
+router.post("/condos/:id/comments", isLoggedIn, (req, res)=>{
 	Condo.findById(req.params.id, (err, foundCondo)=>{
 		if(err){
 			console.log(err);
@@ -38,6 +38,14 @@ router.post("/condos/:id/comments", (req, res)=>{
 		}
 	});
 })
+//midlleware- check if logged findById
+function isLoggedIn(req, res, next) {
+	if(req.isAuthenticated()){
+		return next();
+	} else {
+		res.redirect("/login");
+	}
+}
 
 module.exports = router;
 
