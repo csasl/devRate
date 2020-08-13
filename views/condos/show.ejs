@@ -18,6 +18,10 @@
 					<p><%=condo.address %></p>
 					<p><%=condo.postalCode %></p>
 					<p>Developer: <%=condo.developer %></p>
+					<a class="btn btn-xs btn-warning" href="/condos/<%=condo._id%>/edit">Edit</a>
+					<form id="delete-form" action="/condos/<%=condo._id%>?_method=DELETE" method="POST">
+						<button class="btn btn-xs btn-danger">Delete</button>
+					</form>
                 </div>
             </div>
             <div class="well">

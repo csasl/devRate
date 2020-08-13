@@ -6,7 +6,7 @@ const condoSchema = new mongoose.Schema({
 	address: String,
 	postalCode: String,
 	image: String,
-	rent: String,
+	rent: Number,
 	author: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,

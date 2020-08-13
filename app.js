@@ -1,6 +1,6 @@
 const express = require("express"),
 	  bodyParser = require("body-parser"),
-	  mongoose = require("mongoose"),
+	  methodOverride = require("method-override"),
 	  passport = require("passport"),
 	  LocalStrategy = require("passport-local");
 	  
@@ -10,24 +10,40 @@ const app = express(),
 	  Condo = require("./models/condo"),
 	  Comment= require("./models/comment"),
 	  User = require("./models/user");
-	 
 
+//Require routes
+const  indexRoutes = require("./routes/index"),
+	  condoRoutes = require("./routes/condo"),
+	  commentRoutes = require("./routes/comment");
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/devrate', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:false, useCreateIndex:true});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+});
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 
 
 //Mongoose set up
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('useUnifiedTopology', true);
-mongoose.connect("mongodb://localhost/devrate").then(()=>{
-	console.log("DB started");
-}).catch(err =>{
-	console.log("ERROR", err.message);
-});
+// mongoose.set('useNewUrlParser', true);
+// mongoose.set('useFindAndModify', false);
+// mongoose.set('useCreateIndex', true);
+// mongoose.set('useUnifiedTopology', true);
+// mongoose.connect("mongodb://localhost/devrate").then(()=>{
+// 	console.log("DB started");
+// }).catch(err =>{
+// 	console.log("ERROR", err.message);
+// });
+
 
 //Passport configuration
 app.use(require("express-session") ({
@@ -45,11 +61,6 @@ app.use((req, res, next)=>{
 	res.locals.currentUser = req.user;
 	next();
 });
-
-//Require routes
-const  indexRoutes = require("./routes/index"),
-	  condoRoutes = require("./routes/condo"),
-	  commentRoutes = require("./routes/comment");
 
 app.use(indexRoutes);
 app.use("/condos", condoRoutes);

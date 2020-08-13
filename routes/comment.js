@@ -28,6 +28,8 @@ router.post("/condos/:id/comments", isLoggedIn, (req, res)=>{
 					console.log(err);
 					res.redirect("/condos");
 				} else {
+					comment.author.id = req.user._id;
+					comment.author.username = req.user.username,
 					comment.save();
 					foundCondo.comments.push(comment);
 					foundCondo.save();
