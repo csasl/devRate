@@ -24,8 +24,7 @@ router.post("/condos/:id/comments", middleware.isLoggedIn, (req, res)=>{
 		} else {
 			Comment.create(req.body.comment, (err, comment)=>{
 				if(err){
-					//ADD FLASH HERE
-					console.log(err);
+					req.flash("error", "Something went wrong, please try again later");
 					res.redirect("/condos");
 				} else {
 					comment.author.id = req.user._id;
@@ -33,7 +32,7 @@ router.post("/condos/:id/comments", middleware.isLoggedIn, (req, res)=>{
 					comment.save();
 					foundCondo.comments.push(comment);
 					foundCondo.save();
-					//ADD FLASH HERE
+					req.flash("success", "Comment added!");
 					res.redirect("/condos/" + foundCondo._id);
 				}
 			});
@@ -68,9 +67,10 @@ router.put("/condos/:id/comments/:comment_id", middleware.checkCommentOwnership,
 router.delete("/condos/:id/comments/:comment_id", middleware.checkCommentOwnership, (req, res)=>{
 	Comment.findByIdAndRemove(req.params.comment_id, (err)=>{
 		if(err){
+			req.flash("error", "Something went wrong. Please try again later");
 			res.redirect("/condos");
 		} else {
-			//ADD FLASH HERE
+			req.flash("success", "Comment removed");
 			res.redirect("/condos/" + req.params.id);
 		}
 	});

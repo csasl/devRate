@@ -19,11 +19,11 @@ router.post("/register", (req, res)=>{
 	let newUser = new User({username: req.body.username});
 	User.register(newUser, req.body.password, (err, user)=>{
 		if(err){
-			//ADD FLASH HERE
-			return res.render("/register");
+			req.flash("error", err.message);
+			return res.redirect("/register");
 		} else {
 			passport.authenticate("local")(req, res, ()=>{
-				//ADD FLASH HERE
+				req.flash("success", "Welcome " + user.username + "!");
 				res.redirect("/condos");
 			});
 		}
@@ -46,7 +46,7 @@ router.post("/login", passport.authenticate("local", {
 //logout route
 router.get("/logout", (req, res)=>{
 	req.logout();
-	//ADD FLASH HERE
+	req.flash("success", "Logged you out");
 	res.redirect("/condos");
 });
 
