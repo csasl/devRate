@@ -7,7 +7,8 @@ const express = require("express"),
 //NEW COMMENT
 router.get("/condos/:id/comments/new", middleware.isLoggedIn, (req,res)=>{
 	Condo.findById(req.params.id, (err, condo)=>{
-		if(err){
+		if(err || !condo){
+			req.flash("error", "Condo not found");
 			res.redirect("/condos");
 		} else {
 			res.render("comments/new", {condo: condo});
@@ -42,13 +43,20 @@ router.post("/condos/:id/comments", middleware.isLoggedIn, (req, res)=>{
 
 //EDIT ROUTE
 router.get("/condos/:id/comments/:comment_id/edit", middleware.checkCommentOwnership, (req, res)=>{
-	Comment.findById(req.params.comment_id, (err, foundComment)=>{
-		if(err){
-			res.redirect("back");
-		} else {
-			res.render("comments/edit", {condo_id: req.params.id, comment:foundComment});
-		}
+	Condo.findById(req.params.id, (err, foundCondo)=>{
+		if(err || !foundCondo){
+			req.flash("error", "Condo not found!");
+			return res.redirect("back");
+		}		
+		Comment.findById(req.params.comment_id, (err, foundComment)=>{
+			if(err){
+				res.redirect("back");
+			} else {
+				res.render("comments/edit", {condo_id: req.params.id, comment:foundComment});
+			}
+		});
 	});
+	
 });
 
 //COMMENT UPDATE ROUTE

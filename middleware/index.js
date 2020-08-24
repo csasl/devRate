@@ -6,8 +6,8 @@ const middleWareObj = {};
 middleWareObj.checkCondoOwnership = function(req, res, next){
 	if(req.isAuthenticated()){
 		Condo.findById(req.params.id, (err, foundCondo)=>{
-			if(err){
-				req.flash("error", "Something went wrong, please try again later");
+			if(err || !foundCondo){
+				req.flash("error", "Condo not found!");
 				res.redirect("back");
 			} else {
 				if(foundCondo.author.id.equals(req.user._id)) {
@@ -27,7 +27,8 @@ middleWareObj.checkCondoOwnership = function(req, res, next){
 middleWareObj.checkCommentOwnership = function(req, res, next){
 	if(req.isAuthenticated()){
 		Comment.findById(req.params.comment_id, (err, foundComment)=>{
-			if(err){
+			if(err || !foundComment){
+				req.flash("error", "Comment not found");
 				res.redirect("back");
 			} else {
 				if(foundComment.author.id.equals(req.user._id)){

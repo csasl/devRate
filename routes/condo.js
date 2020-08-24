@@ -46,8 +46,9 @@ router.post("/", middleware.isLoggedIn, (req, res)=>{
 //SHOW
 router.get("/:id", (req, res)=>{
 	Condo.findById(req.params.id).populate("comments").exec((err, foundCondo) =>{
-		if(err){
-			res.redirect("/condos");
+		if(err || !foundCondo){
+			req.flash("error", "Condo not found!");
+			res.redirect("back");
 		} else {
 			res.render("condos/show", {condo: foundCondo});
 		}
