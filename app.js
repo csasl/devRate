@@ -16,7 +16,8 @@ const app = express(),
 //Require routes
 const  indexRoutes = require("./routes/index"),
 	  condoRoutes = require("./routes/condo"),
-	  commentRoutes = require("./routes/comment");
+	  commentRoutes = require("./routes/comment"),
+	  reviewRoutes = require("./routes/reviews");
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/devrate', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:false, useCreateIndex:true});
@@ -59,7 +60,7 @@ app.use((req, res, next)=>{
 app.use(indexRoutes);
 app.use("/condos", condoRoutes);
 app.use(commentRoutes);
-//app.use("/condos/:id/comments", commentRoutes);
+app.use(reviewRoutes);
 
 
 var port = process.env.PORT || 3000;
