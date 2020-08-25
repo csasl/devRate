@@ -1,5 +1,6 @@
 const Condo = require("../models/condo"),
-	  Comment = require("../models/comment");
+	  Comment = require("../models/comment"),
+	  Review = require("../modles/review");
 
 const middleWareObj = {};
 
@@ -47,6 +48,50 @@ middleWareObj.checkCommentOwnership = function(req, res, next){
 middleWareObj.isLoggedIn = function(req, res, next) {
 	if(req.isAuthenticated()){
 		return next();
+	} else {
+		req.flash("error", "You need to be logged in to do that");
+		res.redirect("/login");
+	}
+}
+
+middleWareObj.checkReviewExistence = function (req, res, next){
+	if(req.isAuthenticated()){
+		Condo.findById(req.params.id).populate("reviews").exec((err, condo)=>{
+			if(err || !condo){
+				req.flash("error", "Condo not found");
+				req.redirect("back");
+			} else {
+				const foundUserReview = condo.reviews.some((review)=>{
+					return review.author.id.equals(req.user._id);
+				});
+				
+				if(foundUserReview){
+					req.flash("error", "You have already reviewed this condo. Please edit your review to make any changes");
+				} else {
+					next();
+				}
+			}
+		});
+	} else {
+		req.flash("error", "You need to log in first");
+		res.redirect("/login");
+	}
+}
+
+middleWareObj.checkReviewOwnership = function (req, res, next) {
+	if(req.isAuthenticated()){
+		Review.findById(req.params.review_id, (err, foundReview)=>{
+			if(err || !foundReview){
+				req.flash("error", "Review not found");
+				res.redirect("back");
+			} else {
+				if(foundReview.author.id.equals(req.user._id)){
+					next();
+				} else {
+					req.flash("error", "You don't have permission to do that");
+				}
+			}
+		});
 	} else {
 		req.flash("error", "You need to be logged in to do that");
 		res.redirect("/login");
