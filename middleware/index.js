@@ -1,6 +1,6 @@
 const Condo = require("../models/condo"),
 	  Comment = require("../models/comment"),
-	  Review = require("../modles/review");
+	  Review = require("../models/review");
 
 const middleWareObj = {};
 

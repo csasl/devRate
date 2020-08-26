@@ -1,6 +1,8 @@
 const express = require("express"),
 	  router = express.Router(),
 	  Condo = require("../models/condo"),
+	  Comment = require("../models/comment"),
+	  Review = require("../models/review"),
 	  middleware = require("../middleware/index");
 
 
@@ -45,7 +47,10 @@ router.post("/", middleware.isLoggedIn, (req, res)=>{
 
 //SHOW
 router.get("/:id", (req, res)=>{
-	Condo.findById(req.params.id).populate("comments").exec((err, foundCondo) =>{
+	Condo.findById(req.params.id).populate("comments").populate({
+		path: "reviews",
+		options:{sort: {createdAt: -1}}
+	}).exec((err, foundCondo) =>{
 		if(err || !foundCondo){
 			req.flash("error", "Condo not found!");
 			res.redirect("back");
@@ -64,6 +69,7 @@ router.get("/:id/edit", middleware.checkCondoOwnership, (req, res)=>{
 
 //UPDATE CONDO ROUTE
 router.put("/:id", middleware.checkCondoOwnership, (req, res)=>{
+	delete req.body.condo.rating;
 	Condo.findByIdAndUpdate(req.params.id, req.body.condo, {new: true}, (err, updatedCondo)=>{
 		if(err){
 			res.redirect("back");
@@ -79,6 +85,7 @@ router.delete("/:id", middleware.checkCondoOwnership, (req, res)=>{
 		if(err){
 			res.redirect("/condos");
 		} else {
+			
 			res.redirect("/condos");
 		}
 	});

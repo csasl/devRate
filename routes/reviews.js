@@ -5,17 +5,17 @@ const express = require("express"),
 	  middleware = require("../middleware");
 
 //Index route- to show all from most recent to least recent
-router.get("/condos/:id/reviews", (req, res)=>{
-	Condo.findById(req.params.id).populate({
-		path: "reviews",
-		options: {sort: {createdAt: -1}}
-	}).exec((err, condo)=>{
-		if(err || !condo){
-			req.flash("error", "Condo not found");
-			return res.redirect("back");
-		}
-		res.render("reviews/index", {condo: condo});
-	});
+router.get("/condos/:id/reviews", function (req, res) {
+    Condo.findById(req.params.id).populate({
+        path: "reviews",
+        options: {sort: {createdAt: -1}} // sorting the populated reviews array to show the latest first
+    }).exec(function (err, condo) {
+        if (err || !condo) {
+            req.flash("error", err.message);
+            return res.redirect("back");
+        }
+        res.render("reviews/index", {condo: condo});
+    });
 });
 
 // Reviews New
@@ -87,7 +87,7 @@ router.put("/condos/:id/reviews/:review_id", middleware.checkReviewOwnership, (r
             //save changes
             condo.save();
             req.flash("success", "Your review was successfully edited.");
-            res.redirect('/campgrounds/' + condo._id);
+            res.redirect('/condos/' + condo._id);
         });
     });
 });
