@@ -1,9 +1,12 @@
+require('dotenv').config();
+
 const express = require("express"),
 	  bodyParser = require("body-parser"),
 	  methodOverride = require("method-override"),
 	  passport = require("passport"),
 	  LocalStrategy = require("passport-local"),
 	  flash = require("connect-flash");
+
 	 
 	  
 

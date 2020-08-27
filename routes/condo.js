@@ -3,8 +3,16 @@ const express = require("express"),
 	  Condo = require("../models/condo"),
 	  Comment = require("../models/comment"),
 	  Review = require("../models/review"),
-	  middleware = require("../middleware/index");
+	  middleware = require("../middleware/index"),
+	  NodeGeocoder = require("node-geocoder");
 
+const options = {
+  provider: 'google',
+  httpAdapter: 'https',
+  apiKey: process.env.GEOCODER_API_KEY,
+  formatter: null
+};
+const geocoder = NodeGeocoder(options);
 
 //INDEX
 router.get("/", (req, res)=>{
@@ -26,24 +34,37 @@ router.get("/new", middleware.isLoggedIn, (req, res)=>{
 router.post("/", middleware.isLoggedIn, (req, res)=>{
 	let name = req.body.name,
 		  developer = req.body.developer,
-		  address = req.body.address,
-		  postalCode = req.body.postalCode,
 		  rent = req.body.rent,
 		  image = req.body.image,
+		  location = req.body.location,
 		  author = {
 			  id: req.user._id,
 			  username: req.user.username
-		  },
-		  newCondo = {name: name, developer:developer, address: address, postalCode: postalCode, rent: rent, image:image, author:author};
-	//save condo to db
-	Condo.create(newCondo, (err, c)=>{
-		if(err){
-			console.log("ERROR");
-		} else {
-			res.redirect("/condos");
-		}
-	})
-});
+		  };
+		geocoder.geocode(req.body.postalCode, (err, data)=>{
+			if(err || !data.length) {
+				console.log(err);
+				req.flash("error", "Invalid postal code");
+				return res.redirect("back");
+				
+			} else {
+				let lat = data[0].latitude;
+   				let lng = data[0].longitude;
+				let postalCode = data[0].zipcode;
+				newCondo = {name: name, developer:developer, location: location, lat: lat, lng: lng, postalCode: postalCode, rent: rent, image:image, author:author};
+			//save condo to db
+				Condo.create(newCondo, (err, c)=>{
+					if(err){
+						console.log("ERROR");
+					} else {
+						res.redirect("/condos/" + c._id);
+					}
+					});
+				}
+			
+		});
+	});
+	
 
 //SHOW
 router.get("/:id", (req, res)=>{
@@ -69,14 +90,26 @@ router.get("/:id/edit", middleware.checkCondoOwnership, (req, res)=>{
 
 //UPDATE CONDO ROUTE
 router.put("/:id", middleware.checkCondoOwnership, (req, res)=>{
-	delete req.body.condo.rating;
-	Condo.findByIdAndUpdate(req.params.id, req.body.condo, {new: true}, (err, updatedCondo)=>{
-		if(err){
-			res.redirect("back");
+	geocoder.geocode(req.body.condo.postalCode, (err, data)=>{
+		if(err || !data.length){
+			console.log(err);
+			req.flash("error", "Invalid address");
+			return res.redirect("back");
 		} else {
-			res.redirect("/condos/"+updatedCondo._id);
+			req.body.condo.lat= data[0].latitude;
+			req.body.condo.lng= data[0].longitude;
+			req.body.condo.postalCode= data[0].zipcode;
+			delete req.body.condo.rating;
+			Condo.findByIdAndUpdate(req.params.id, req.body.condo, {new: true}, (err, updatedCondo)=>{
+			if(err){
+				res.redirect("back");
+			} else {
+					res.redirect("/condos/"+updatedCondo._id);
+				}
+			});
 		}
 	});
+	
 });
 
 //DELETE CONDO ROUTE

@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 const condoSchema = new mongoose.Schema({
 	name: String,
 	developer: String,
-	address: String,
+	location: String,
+	lat: Number,
+	lng: Number,
 	postalCode: String,
 	image: String,
 	rent: Number,

@@ -5,22 +5,28 @@
         <div style="width: 30%; margin: 25px auto;">
             <form action="/condos/<%= condo._id %>?_method=PUT" method="POST">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="condo[name]" value="<%= condo.name %>">
+					<label for="name">Condo name</label>
+                    <input class="form-control" type="text" name="condo[name]" id="name" value="<%= condo.name %>">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="condo[developer]" value="<%= condo.developer %>">
+					<label for="developer">Condo developer</label>
+                    <input class="form-control" type="text" name="condo[developer]" id="developer" value="<%= condo.developer %>">
                 </div>
 				 <div class="form-group">
-                    <input class="form-control" type="text" name="condo[address]" value="<%= condo.address %>">
+					 <label for="location"Street Address</label>
+                    <input class="form-control" type="text" name="condo[location]" id="location" value="<%= condo.location %>">
                 </div>
 				 <div class="form-group">
-                    <input class="form-control" type="text" name="condo[postalCode]" value="<%= condo.postalCode %>">
+					 <label for="postalCode">Postal Code</label>
+                    <input class="form-control" type="text" name="condo[postalCode]" id="postalCode" value="<%= condo.postalCode %>">
                 </div>
 				<div class="form-group">
-                    <input class="form-control" type="text" name="condo[image]" value="<%= condo.image %>">
+					<label for="image">Condo image</label>
+                    <input class="form-control" type="text" name="condo[image]" id="image" value="<%= condo.image %>">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="number" name="condo[rent]" value="<%= condo.rent %>">
+					<label for="rent">Approximate rent per month</label>
+                    <input class="form-control" type="number" name="condo[rent]" id="rent" value="<%= condo.rent %>">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block">Submit!</button>
