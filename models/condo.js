@@ -9,6 +9,11 @@ const condoSchema = new mongoose.Schema({
 	postalCode: String,
 	image: String,
 	rent: Number,
+	amenities: {
+		type: [{type: String, enum: ["none", "pool", "gym", "retail", "concierge", "bike-locker", "rooftop"]}],
+		default: "none"
+	},
+	petFriendly: Boolean,
 	author: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,

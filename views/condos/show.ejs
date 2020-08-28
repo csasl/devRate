@@ -16,11 +16,41 @@
 					<p><%=condo.location %></p>
 					<p><%=condo.postalCode %></p>
 					<p>Developer: <%=condo.developer %></p>
+					<p>Amenities:
+						<% if (condo.amenities.includes("pool")) { %>
+							<span><i class="fas fa-swimmer"></i>Pool</span>
+						<% } %>
+						<% if (condo.amenities.includes("gym")) { %>
+							<span><i class="fas fa-dumbbell"></i>Gym</span>
+						<% } %>
+						<% if (condo.amenities.includes("retail")) { %>
+							<span><i class="fas fa-shopping-cart"></i>Retail</span>
+						<% } %>
+						<% if (condo.amenities.includes("concierge")) { %>
+							<span><i class="fas fa-concierge-bell"></i>Concierge</span>
+						<% } %>
+						<% if (condo.amenities.includes("bike-locker")) { %>
+							<span><i class="fas fa-bicycle"></i>Bike locker</span>
+						<% } %>
+						<% if (condo.amenities.includes("rooftop")) { %>
+							<span><i class="fas fa-leaf"></i>Rooftop terrace</span>
+						<% } %>
+						<% if (condo.amenities.includes("none")) { %>
+							<span>None</span>
+						<% } %>
+					</p>
+					<p>Pet friendly: %>
+						<% if(condo.petFriendly) { %>
+							<span>Yes</span>
+						<% } else {%>
+							<span>No</span>
+						<% } %>
+					</p>
 					<% if(currentUser && condo.author.id.equals(currentUser._id)){ %>
 						<a class="btn  btn-warning" href="/condos/<%=condo._id%>/edit">Edit condo</a>
 					<% } %>
 					<div style= "margin-top: 10px">
-						<a class="btn btn-default" href="/condos"><i class="fa fa-arrow-left">Go back</i></a>
+						<a class="btn btn-default" href="/condos"><i class="fa fa-arrow-left"></i>Go back</a>
 					</div>
                 </div>
             </div>
@@ -75,7 +105,7 @@
 							</div>
 					<% } %>
 					<div>
-						 <a class="btn btn-primary btn-lg <% if (currentUser && condo.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/condos/<%= condo._id %>/reviews/new">
+						 <a class="btn btn-primary btn-md <% if (currentUser && condo.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/condos/<%= condo._id %>/reviews/new">
                             Write a New Review</a>
 				    </div>
 				</div>
@@ -83,7 +113,8 @@
 			</div>
 			
             <div class="well">
-                <div class="text-right">
+				<p style="text-align: left"><strong>Comments:</strong></p>
+                <div class="text-right">				
                     <a class="btn btn-success" href="/condos/<%= condo._id %>/comments/new">Add New Comment</a>
                 </div>
                 <hr>

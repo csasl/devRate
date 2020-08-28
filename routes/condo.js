@@ -40,7 +40,10 @@ router.post("/", middleware.isLoggedIn, (req, res)=>{
 		  author = {
 			  id: req.user._id,
 			  username: req.user.username
-		  };
+		  },
+		amenities = Array.isArray(req.body.amenities) ? req.body.amenities : [req.body.amenities],
+		petFriendly = req.body.petFriendly;
+		
 		geocoder.geocode(req.body.postalCode, (err, data)=>{
 			if(err || !data.length) {
 				console.log(err);
@@ -51,11 +54,11 @@ router.post("/", middleware.isLoggedIn, (req, res)=>{
 				let lat = data[0].latitude;
    				let lng = data[0].longitude;
 				let postalCode = data[0].zipcode;
-				newCondo = {name: name, developer:developer, location: location, lat: lat, lng: lng, postalCode: postalCode, rent: rent, image:image, author:author};
+				newCondo = {name: name, developer:developer, location: location, amenities:amenities, lat: lat, lng: lng, postalCode: postalCode, rent: rent, image:image, author:author, petFriendly:petFriendly};
 			//save condo to db
 				Condo.create(newCondo, (err, c)=>{
 					if(err){
-						console.log("ERROR");
+						console.log(err.message);
 					} else {
 						res.redirect("/condos/" + c._id);
 					}
