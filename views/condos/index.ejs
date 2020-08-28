@@ -3,7 +3,7 @@
  <div class="container">
      <header class="jumbotron">
          <div class="container">
-             <h1>Welcome Rate My Condo!</h1>           
+             <h1 style="text-align: center">Welcome to Rate My Condo Vancouver!</h1>           
              <div class="text-center">
                 <a class="btn btn-primary btn-large" href="/condos/new">Add New Condo</a>
              </div>
@@ -14,7 +14,7 @@
         <% condos.forEach(function(condo){ %>
             <div class="col-md-3 col-sm-6">
                 <div class="thumbnail">
-                   <img src="<%= condo.image %>">
+                   <img id="index-img" src="<%= condo.image %>">
                    <div class="caption">
                        <h4><%= condo.name %></h4>
 					   <% if(condo.rating == 0) { %>
