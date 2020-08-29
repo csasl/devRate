@@ -1,5 +1,5 @@
 <%- include('../partials/header') %>
-<div class="container">
+
     <div class="row">
         <div class="col-md-3">
             <div class="list-group">
@@ -17,6 +17,10 @@
 					<p><%=condo.postalCode %></p>
 					<p>Developer: <%=condo.developer %></p>
 					<p>Amenities:
+						
+						<%if(condo.amenities.includes(null)) { %>
+							<span>None</span>
+						<% } %>
 						<% if (condo.amenities.includes("pool")) { %>
 							<span><i class="fas fa-swimmer"></i>Pool</span>
 						<% } %>
@@ -137,7 +141,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 <script>
   function initMap() {

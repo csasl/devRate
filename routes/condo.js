@@ -20,7 +20,7 @@ router.get("/", (req, res)=>{
 		if(err){
 			console.log(err);
 		} else {
-			res.render("condos/index", {condos: allCondos});
+			res.render("condos/index", {condos: allCondos, page:'condos'});
 		}
 	});
 });

@@ -1,5 +1,5 @@
 <%- include('../partials/header') %>
-<div class="container">
+
     <div class="row">
         <h1 style="text-align: center">Edit <%= condo.name %></h1>
         <div style="width: 30%; margin: 25px auto;">
@@ -28,6 +28,41 @@
 					<label for="rent">Approximate rent per month</label>
                     <input class="form-control" type="number" name="condo[rent]" id="rent" value="<%= condo.rent %>">
                 </div>
+				
+				<div class="form-group">
+					<label class="control-label">Condo ameneties:</label>
+					<div class="checkbox">
+						<label><input type="checkbox" name="condo[amenities]" value="pool">Pool</label>					
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" name="condo[amenities]" value="gym">Gym</label>					
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" name="condo[amenities]" value="retail">Retail</label>					
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" name="condo[amenities]" value="concierge">Concierge</label>					
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" name="condo[amenities]" value="bike-locker">Bike locker</label>					
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" name="condo[amenities]" value="rooftop">Rooftop terrace</label>					
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" name="condo[amenities]" value="none">None of the above</label>					
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label">Pet friendly:</label>
+					<div class="radio">
+						<label><input type="radio" name="condo[petFriendly]" value=true>Yes</label>
+					</div>
+					<div class="radio">
+						<label><input type="radio" name="condo[petFriendly]" value=false>No</label>
+					</div>
+				</div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block">Submit!</button>
                 </div>
@@ -35,5 +70,5 @@
             <a href="/condo">Go Back</a>
         </div>
     </div>
-</div>
+
 <%- include('../partials/footer') %>
