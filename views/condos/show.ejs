@@ -50,6 +50,9 @@
 							<span>No</span>
 						<% } %>
 					</p>
+					<p>
+						<em> Submitted on: <%=moment(condo.createdAt).fromNow() %></em>
+					</p>
 					<% if(currentUser && condo.author.id.equals(currentUser._id)){ %>
 						<a class="btn  btn-warning" href="/condos/<%=condo._id%>/edit">Edit condo</a>
 					<% } %>
@@ -126,6 +129,7 @@
                     <div class="row">
                         <div class="col-md-12">
 							<strong><%=comment.author.username%></strong>
+							<span class="pull-right"><%=moment(comment.createdAt).fromNow() %></span>
                             <p>
                                 <%= comment.text %> 
                             </p>

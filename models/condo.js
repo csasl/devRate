@@ -14,6 +14,7 @@ const condoSchema = new mongoose.Schema({
 		default: "none"
 	},
 	petFriendly: Boolean,
+	createdAt: {type: Date, default: Date.now},
 	author: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,
