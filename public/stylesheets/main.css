@@ -34,9 +34,30 @@ body {
 #show-img {
 	height: 750px;
 	width: 600px;
+	margin-top: 40px;
 }
 
 #index-img{
 	width: 600px;
 	height: 400px;
 }
+
+.footer{
+	flex-shrink:0;
+}
+
+.col-md-2{
+	text-align: center;
+}
+
+.icon{
+	font-size: 2rem;
+}
+
+#welcome{
+	background-image: url('../images/background1.jpg');
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	height: 100%;
+	color: white;

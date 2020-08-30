@@ -11,47 +11,73 @@
             <div class="thumbnail">
                 <img class="img-responsive" id="show-img" src="<%= condo.image %>">
                 <div class="caption-full">
-                    <h4 class="pull-right">Approximate rent/mo: $<%= condo.rent %> CAD</h4>
+                    <h4 class="pull-right">Approximate rent/month: $<%= condo.rent %> CAD</h4>
                     <h4><a><%=condo.name%></a></h4>
-					<p><%=condo.location %></p>
-					<p><%=condo.postalCode %></p>
-					<p>Developer: <%=condo.developer %></p>
-					<p>Amenities:
-						
-						<%if(condo.amenities.includes(null)) { %>
-							<span>None</span>
-						<% } %>
-						<% if (condo.amenities.includes("pool")) { %>
-							<span><i class="fas fa-swimmer"></i>Pool</span>
-						<% } %>
-						<% if (condo.amenities.includes("gym")) { %>
-							<span><i class="fas fa-dumbbell"></i>Gym</span>
-						<% } %>
-						<% if (condo.amenities.includes("retail")) { %>
-							<span><i class="fas fa-shopping-cart"></i>Retail</span>
-						<% } %>
-						<% if (condo.amenities.includes("concierge")) { %>
-							<span><i class="fas fa-concierge-bell"></i>Concierge</span>
-						<% } %>
-						<% if (condo.amenities.includes("bike-locker")) { %>
-							<span><i class="fas fa-bicycle"></i>Bike locker</span>
-						<% } %>
-						<% if (condo.amenities.includes("rooftop")) { %>
-							<span><i class="fas fa-leaf"></i>Rooftop terrace</span>
-						<% } %>
-						<% if (condo.amenities.includes("none")) { %>
-							<span>None</span>
-						<% } %>
-					</p>
-					<p>Pet friendly: %>
+					<p><strong>Address: </strong><%=condo.location %> , <%=condo.postalCode%></p>
+					<p><strong>Developer: </strong> <%=condo.developer %></p>
+					<p><strong>Pet friendly:</strong> %>
 						<% if(condo.petFriendly) { %>
 							<span>Yes</span>
 						<% } else {%>
 							<span>No</span>
 						<% } %>
 					</p>
+					<p><strong><center>Amenities</center></strong> </p>
+					<div class="row">
+						
+						<%if(condo.amenities.includes(null) || condo.amenities.includes("none")) { %>
+							<div class="col-md-2">
+									<span>None</span>
+							</div>
+						
+						<% } %>
+						
+						<% if (condo.amenities.includes("pool")) { %>
+							<div class="col-md-2">
+								<div><i class="fas fa-swimmer icon"></i></div>
+								<div>Pool</div>
+							</div>
+						<% } %>
+						
+						<% if (condo.amenities.includes("gym")) { %>
+							<div class="col-md-2">
+								<div><i class="fas fa-dumbbell icon"></i></div>
+								<div>Gym</div>
+							</div>
+						<% } %>
+						
+						<% if (condo.amenities.includes("retail")) { %>
+							<div class="col-md-2">
+								<div><i class="fas fa-shopping-cart icon"></i></div>
+								<div>Retail</div>
+							</div>
+						<% } %>
+						
+						<% if (condo.amenities.includes("concierge")) { %>
+							<div class="col-md-2">
+								<div><i class="fas fa-concierge-bell icon"></i></div>
+								<div> Concierge</div>		
+							</div>
+						<% } %>
+						
+						<% if (condo.amenities.includes("bike-locker")) { %>
+							<div class="col-md-2">					
+								<div><i class="fas fa-bicycle icon"></i></div>
+								<div>Bike Locker</div>
+							</div>
+						<% } %>
+						
+						<% if (condo.amenities.includes("rooftop")) { %>
+							<div class="col-md-2">
+								<div><i class="fas fa-leaf icon"></i></div>
+								<div>Rooftop terrace</div>
+							</div>
+						<% } %>
+						
+					</div>
+					
 					<p>
-						<em> Submitted on: <%=moment(condo.createdAt).fromNow() %></em>
+						<em> Submitted  <%=moment(condo.createdAt).fromNow() %></em>
 					</p>
 					<% if(currentUser && condo.author.id.equals(currentUser._id)){ %>
 						<a class="btn  btn-warning" href="/condos/<%=condo._id%>/edit">Edit condo</a>
