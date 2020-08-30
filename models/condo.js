@@ -8,6 +8,7 @@ const condoSchema = new mongoose.Schema({
 	lng: Number,
 	postalCode: String,
 	image: String,
+	imageId: String,
 	rent: Number,
 	amenities: {
 		type: [{type: String, enum: ["none", "pool", "gym", "retail", "concierge", "bike-locker", "rooftop"]}],

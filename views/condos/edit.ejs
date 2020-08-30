@@ -3,7 +3,7 @@
     <div class="row">
         <h1 style="text-align: center">Edit <%= condo.name %></h1>
         <div style="width: 30%; margin: 25px auto;">
-            <form action="/condos/<%= condo._id %>?_method=PUT" method="POST">
+            <form action="/condos/<%= condo._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
 					<label for="name">Condo name</label>
                     <input class="form-control" type="text" name="condo[name]" id="name" value="<%= condo.name %>">
@@ -20,10 +20,7 @@
 					 <label for="postalCode">Postal Code</label>
                     <input class="form-control" type="text" name="condo[postalCode]" id="postalCode" value="<%= condo.postalCode %>">
                 </div>
-				<div class="form-group">
-					<label for="image">Condo image</label>
-                    <input class="form-control" type="text" name="condo[image]" id="image" value="<%= condo.image %>">
-                </div>
+				
                 <div class="form-group">
 					<label for="rent">Approximate rent per month</label>
                     <input class="form-control" type="number" name="condo[rent]" id="rent" value="<%= condo.rent %>">
@@ -63,9 +60,15 @@
 						<label><input type="radio" name="condo[petFriendly]" value=false>No</label>
 					</div>
 				</div>
+				<div class="form-group">
+                    <label for="image">Image</label>
+                    <input type="file" id="image" name="image" accept="image/*" >
+                </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block">Submit!</button>
                 </div>
+				
+				
             </form>
             <a href="/condo">Go Back</a>
         </div>
