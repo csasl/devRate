@@ -53,8 +53,8 @@ router.get("/new", middleware.isLoggedIn, (req, res)=>{
 });
 
 //NEW
-router.post("/", middleware.isLoggedIn,  upload.single('image'), (req, res)=>{
-	 cloudinary.v2.uploader.upload(req.file.path, function(err, result) {
+router.post("/", middleware.isLoggedIn,  upload.single('image'),    (req, res)=>{
+	 cloudinary.v2.uploader.upload(req.file.path, { moderation: "webpurify" },function(err, result) {
       	if(err) {
         	req.flash('error', err.message);
         	return res.redirect('back');
@@ -129,7 +129,7 @@ router.put("/:id", middleware.checkCondoOwnership, upload.single('image'), (req,
 			if(req.file) {
 				try{
 					await cloudinary.v2.uploader.destroy(condo.imageId);
-					let result = await cloudinary.v2.uploader.upload(req.file.path);
+					let result = await cloudinary.v2.uploader.upload(req.file.path, { moderation: "webpurify" });
 					condo.image = result.secure_url;
 					condo.imageId = result.public_id;
 				} catch(err){
