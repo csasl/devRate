@@ -1,9 +1,11 @@
 # Rate My Condo
 ![](screenshots/readme.jpg)
 
-Rate my Condo Vancouver is a website for Vancouver residents to share information about their condos. Once users sign up for an account, they can add new condos, share their reviews and comments. 
+Rate my Condo Vancouver is a website for Vancouver residents to share information about and review their condo developments.
 
-This project was created using Node.js, MongoDB, Express and Bootstrap. Passport.js was used to provide user authentication. 
+This project was created using Node.js, MongoDB, Express and Bootstrap. Passport.js was used to provide user authentication and deployed with Heroku.
+
+A live demo of the app can be found here: https://damp-reef-03560.herokuapp.com/
 
 ## Features
 * Users can add a new condo, sharing information about the approximate rent per month, amenities available, developer information and whether their condo is pet friendly.
@@ -12,7 +14,7 @@ This project was created using Node.js, MongoDB, Express and Bootstrap. Passport
 * Users can leave comments relating to the condo development
 
 ## Run it locally
-1. Install [mongodb]
+1. Install [mongodb] 
 2. Create a Cloudinary account to get an API key and secret code
 3. Obtain a Google Maps API key from the Google Maps platform
 
