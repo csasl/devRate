@@ -5,13 +5,13 @@ Rate my Condo Vancouver is a website for Vancouver residents to share informatio
 
 This project was created using Node.js, MongoDB, Express and Bootstrap. Passport.js was used to provide user authentication. 
 
-##Features
+## Features
 * Users can add a new condo, sharing information about the approximate rent per month, amenities available, developer information and whether their condo is pet friendly.
 * Users can edit information about a condo they have submitted
 * Users can rate the development on a scale from 1-5 stars
 * Users can leave comments relating to the condo development
 
-##Run it locally
+## Run it locally
 1. Install [mongodb]
 2. Create a Cloudinary account to get an API key and secret code
 3. Obtain a Google Maps API key from the Google Maps platform
