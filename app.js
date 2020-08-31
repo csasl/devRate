@@ -23,8 +23,19 @@ const  indexRoutes = require("./routes/index"),
 	  reviewRoutes = require("./routes/reviews");
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/devrate', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:false, useCreateIndex:true});
-
+// mongoose.connect('mongodb://localhost/devrate', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:false, useCreateIndex:true});
+mongoose.connect('mongodb+srv://wdbyc:'+process.env.MONGO_ATLAS_PASSWORD+'@cluster0.5lz92.mongodb.net/<dbname>?retryWrites=true&w=majority', {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+	useFindAndModify: false,
+	useCreateIndex: true
+}).then(()=>{
+	console.log('connected to DB');
+}).catch(err=>{
+	console.log("err", err.message);
+});
+		 
+		 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
