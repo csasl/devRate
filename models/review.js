@@ -4,6 +4,7 @@ var reviewSchema = new mongoose.Schema({
     rating: {
       
         type: Number,
+		
         required: ["true", "Please provide a rating of 1-5 stars"],
         min: 1,
         max: 5,

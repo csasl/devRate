@@ -99,17 +99,18 @@ router.delete("/condos/:id/reviews/:review_id", middleware.checkReviewOwnership,
 			req.flash("error", "Something went wrong");
 			res.redirect("back");
 		} else {
-			Condo.findById(req.params.id, (err, condo)=>{
-				if(err){
-					req.flash("error", "Condo not found");
-					res.redirect("back");
-				} else{
-					condo.rating = calculateAverage(condo.reviews);
-					condo.save();
-					req.flash("success", "Your review was deleted");
-					res.redirect("/condos/" + req.params.id);
-				}
-			});
+			 Condo.findByIdAndUpdate(req.params.id, {$pull: {reviews: req.params.review_id}}, {new: true}).populate("reviews").exec(function                (err, condo) {
+            if (err) {
+                req.flash("error", err.message);
+                return res.redirect("back");
+            }
+            // recalculate campground average
+            condo.rating = calculateAverage(condo.reviews);
+            //save changes
+            condo.save();
+            req.flash("success", "Your review was deleted successfully.");
+            res.redirect("/condos/" + req.params.id);
+        });
 		}
 	});
 });

@@ -63,6 +63,6 @@ body {
 	color: white;
 }
 
-#add{
-	background-color: yellow;
+.btn-primary{
+	background-color: #5e03fc;
 }
