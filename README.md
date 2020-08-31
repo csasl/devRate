@@ -1,2 +1,2 @@
 # Rate My Condo
-![Image](readme.jpg)
+![](screenshots/readme.jpg)
